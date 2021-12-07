@@ -9,8 +9,8 @@ import (
 
 	"github.com/Mirantis/libkv"
 	"github.com/Mirantis/libkv/store"
-	etcd "go.etcd.io/etcd/clientv3"
-	"go.etcd.io/etcd/clientv3/concurrency"
+	etcd "go.etcd.io/etcd/client/v3"
+	"go.etcd.io/etcd/client/v3/concurrency"
 )
 
 const (
