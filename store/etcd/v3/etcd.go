@@ -64,7 +64,10 @@ func New(addrs []string, options *store.Config) (store.Store, error) {
 			setTLS(cfg, options.TLS, addrs)
 		}
 		if options.ConnectionTimeout != 0 {
-			setTimeout(cfg, options.ConnectionTimeout)
+			setDialTimeout(cfg, options.ConnectionTimeout)
+		}
+		if options.PersistConnection {
+			setKeepAlive(cfg)
 		}
 		if options.Username != "" {
 			setCredentials(cfg, options.Username, options.Password)
@@ -89,9 +92,15 @@ func setTLS(cfg *etcd.Config, tls *tls.Config, addrs []string) {
 	cfg.TLS = tls
 }
 
-// setTimeout sets the timeout used for connecting to the store
-func setTimeout(cfg *etcd.Config, time time.Duration) {
+// setDailTimeout sets the timeout used for connecting to the store
+func setDialTimeout(cfg *etcd.Config, time time.Duration) {
 	cfg.DialTimeout = time
+}
+
+// setKeepAlive sets keepalive used for etcd v3
+func setKeepAlive(cfg *etcd.Config) {
+	cfg.DialKeepAliveTime = 30 * time.Second
+	cfg.DialKeepAliveTimeout = 10 * time.Second
 }
 
 // setCredentials sets the username/password credentials for connecting to Etcd
