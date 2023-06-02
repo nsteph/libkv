@@ -1,6 +1,6 @@
 module github.com/Mirantis/libkv
 
-go 1.19
+go 1.20
 
 replace github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.5
 
